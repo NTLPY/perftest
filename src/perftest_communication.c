@@ -598,6 +598,23 @@ static int check_better_roce_version(enum ibv_gid_type roce_ver, enum ibv_gid_ty
 }
 #endif
 
+/**
+ * @internal
+ * @brief Get the best GID index for the given context and parameters.
+ *
+ * This function iterates through the GID table and selects the best GID index
+ * based on the specified criteria (e.g., IPv4 vs IPv6, RoCE version).
+ * 1. IPv4 addresses are preferred over IPv6 addresses if the user has not
+ *    explicitly requested IPv6.
+ * 2. Among RoCE addresses, RoCEv2 > RoCEv1.
+ *
+ * @param[in] ctx The pingpong context.
+ * @param[in] user_param The user parameters.
+ * @param[in] attr The port attributes.
+ * @param[in] port The port number.
+ * @returns	The best GID index or -1 on error.
+ * @see check_better_roce_version
+ */
 static int get_best_gid_index (struct pingpong_context *ctx,
 		  struct perftest_parameters *user_param,
 		  struct ibv_port_attr *attr, int port)

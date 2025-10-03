@@ -185,6 +185,9 @@ struct pingpong_context {
 	struct ibv_td				*td;
 	struct ibv_pd				*pad;
 	#endif
+	/// @brief List of memory regions.
+    ///
+	/// INDEX = QP_NUM
 	struct ibv_mr				**mr;
 	struct ibv_mr				*null_mr;
 	struct ibv_cq				*send_cq;
@@ -202,6 +205,9 @@ struct pingpong_context {
 	#endif
 	struct ibv_srq				*srq;
 	struct ibv_sge				*sge_list;
+	/// List of scatter-gather elements.
+	///
+	/// INDEX = recv_post_list * QP_NUM + SDE_INDEX_PER_QP
 	struct ibv_sge				*recv_sge_list;
 	struct ibv_send_wr			*wr;
 	struct ibv_recv_wr			*rwr;
